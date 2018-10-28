@@ -23,7 +23,7 @@ const storageHelper = require('./lib/storage-helper')
 [...] // Create the dialog, so that you have a reference to your text input with the name myInput
 
 const lastInput = await storageHelper.get('myLastInput', 'my default value'); // Retrieves last input or default 'my default value', if nothing is saved
-myInput.value = lastInput;
+myInput.value = lastInput; // and sets it as the input's default value
 
 [...]
 
