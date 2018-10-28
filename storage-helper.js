@@ -19,14 +19,13 @@ class storageHelper {
                 return file;
             }
             else {
-                throw new Error(Storage file storage.json was not a file.');
+                throw new Error('Storage file storage.json was not a file.');
             }
 
         } catch {
             const file = await dataFolder.createEntry('data.json', {type: storage.types.file, overwrite: true});
             if (file.isFile) {
                 await file.write('{}', {append: false});
-                // noinspection JSValidateTypes
                 return file;
             } else {
                 throw new Error('Storage file storage.json was not a file.');
