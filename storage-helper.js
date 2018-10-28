@@ -14,12 +14,12 @@ class storageHelper {
     static async init() {
         let dataFolder = await fs.getDataFolder();
         try {
-            const file = await dataFolder.getEntry('data.json');
-            if (file) { // noinspection JSValidateTypes
+            const file = await dataFolder.getEntry('storage.json');
+            if (file) {
                 return file;
             }
             else {
-                throw new Error('Text Toolbox file data.json was not a file.');
+                throw new Error(Storage file storage.json was not a file.');
             }
 
         } catch {
@@ -29,7 +29,7 @@ class storageHelper {
                 // noinspection JSValidateTypes
                 return file;
             } else {
-                throw new Error('Text Toolbox file data.json was not a file.');
+                throw new Error('Storage file storage.json was not a file.');
             }
         }
     }
