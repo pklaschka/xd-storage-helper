@@ -38,3 +38,33 @@ const result = await dialog.showModal();
 
 [...] // Do stuff with the results
 ```
+
+## Functions reference
+Here is a list of the functions you can call:
+
+#### `storageHelper.get(key: string, defaultValue:*): Promise<*>`
+Retrieves a value from storage. Saves default value if none is set.
+
+Parameters:
+* `key: string`: The identifier (the key of the key-value-pair)
+* `defaultValue: *`: The default value. Gets saved and returned if no value was previously set for the speciefied key.
+
+Returns:
+Promise for the value retrieved from storage. If none is saved, the `defaultValue` is returned.
+
+
+#### `storageHelper.set(key: string, value:*): Promise<void>`
+Saves a certain key-value-pair to the storage.
+
+Parameters:
+* `key: string`: The identifier (the key of the key-value-pair)
+* `value: *`: The value that get's saved
+
+Returns:
+Promise that resolves when the value got saved successfully
+
+#### `storageHelper.reset(): Promise<void>`
+Resets (i.e. purges) all stored settings.
+
+Returns:
+Promise that resolves when the storage got reset
