@@ -7,7 +7,7 @@ It allows to
 - Reset the settings
 
 ## Usage
-First, you'll need to copy the storage-helper.js file into your project. In this case, it gets inserted in a `lib`-folder (relative to the plugin's root folder. Then, the folder structure should be something like this:
+First, you'll need to copy the `storage-helper.js` file into your project. In this case, it gets inserted in a `lib`-folder (relative to the plugin's root folder). Then, the folder structure should be something like this:
 
 * lib
   * storage-helper.js
