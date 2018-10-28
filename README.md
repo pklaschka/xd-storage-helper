@@ -33,4 +33,8 @@ function onsubmit() {
   }); 
 }
 form.onsubmit = onsubmit;
+
+const result = await dialog.showModal();
+
+[...] // Do stuff with the results
 ```
