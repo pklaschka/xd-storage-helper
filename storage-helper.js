@@ -22,7 +22,7 @@ class storageHelper {
                 throw new Error('Storage file storage.json was not a file.');
             }
 
-        } catch {
+        } catch (e) {
             const file = await dataFolder.createEntry('data.json', {type: storage.types.file, overwrite: true});
             if (file.isFile) {
                 await file.write('{}', {append: false});
