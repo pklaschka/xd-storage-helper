@@ -20,7 +20,7 @@ or
 yarn add xd-storage-helper
 ```
 
-inside your project folder. After that, you can simply get a reference to the helper by using
+in a terminal inside your project folder. After that, you can simply get a reference to the helper by using
 
 ```javascript
 const storageHelper = require('xd-storage-helper');
