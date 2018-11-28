@@ -7,6 +7,28 @@ It allows to
 - Reset the settings
 
 ## Usage
+
+### Option 1: With a package manager (npm)
+If you already use a package manager like npm or yarn and have a bundler like webpack for your plugin, you can simply integrate the helper by running
+```
+npm install xd-storage-helper
+```
+
+or
+
+```
+yarn add xd-storage-helper
+```
+
+inside your project folder. After that, you can simply get a reference to the helper by using
+
+```javascript
+const storageHelper = require('xd-storage-helper');
+```
+
+and access its static functions (e.g., `storageHelper.set([...])`).
+
+### Option 2: Without a package manager
 First, you'll need to copy the `storage-helper.js` file into your project. In this case, it gets inserted in a `lib`-folder (relative to the plugin's root folder). Then, the folder structure should be something like this:
 
 * lib
@@ -25,7 +47,7 @@ After that, you can simply call the different functions on the `storageHelper` c
 One common example would be to fill form fields in a dialog with previously used values while I won't show the whole boilerplate code for creating the dialog here (please refer to the Adobe XD plugin documentation for that), here is the basic concept of how to do it:
 
 ```javascript
-const storageHelper = require('./lib/storage-helper')
+const storageHelper = require('./lib/storage-helper') // or const storageHelper = require('xd-storage-helper') if you chose option 1
 
 [...] // Create the dialog, so that you have a reference to your text input with the name myInput
 
