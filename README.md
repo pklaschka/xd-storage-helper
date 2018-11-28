@@ -1,4 +1,4 @@
-# xd-storage-helper
+# :file_folder: xd-storage-helper
 A little helper to make storing key-value-pairs (e.g. settings) for plugins for Adobe XD CC easier.
 
 It allows to
