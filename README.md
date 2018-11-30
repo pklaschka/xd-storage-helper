@@ -1,4 +1,7 @@
 # :file_folder: xd-storage-helper
+
+[![NPM](https://nodei.co/npm/xd-storage-helper.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/xd-storage-helper/)
+
 A little helper to make storing key-value-pairs (e.g. settings) for plugins for Adobe XD CC easier.
 
 It allows to
