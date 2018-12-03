@@ -102,6 +102,15 @@ Parameters:
 Returns:
 Promise that resolves when the value got saved successfully
 
+#### `storageHelper.delete(key: string): Promise<void>`
+Deletes a certain key-value-pair from the storage
+
+Parameters:
+* `key: string`: The identifier (the key of the key-value-pair)
+
+Returns:
+Promise that resolves when the value got deleted successfully
+
 #### `storageHelper.reset(): Promise<void>`
 Resets (i.e. purges) all stored settings.
 
