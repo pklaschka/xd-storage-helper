@@ -2,9 +2,12 @@
 
 [![Build Status](https://travis-ci.com/pklaschka/xd-storage-helper.svg?branch=master)](https://travis-ci.com/pklaschka/xd-storage-helper)
 [![npm version](https://badge.fury.io/js/xd-storage-helper.svg)](https://badge.fury.io/js/xd-storage-helper)
-[![dependencies](https://david-dm.org/pklaschka/xd-storage-helper.svg)](https://david-dm.org/pklaschka/xd-storage-helper)
+![David](https://img.shields.io/david/pklaschka/xd-storage-helper.svg)
+
 
 [![NPM](https://nodei.co/npm/xd-storage-helper.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/xd-storage-helper/)
+
+---
 
 A little helper to make storing key-value-pairs (e.g. settings) for plugins for Adobe XD CC easier.
 
