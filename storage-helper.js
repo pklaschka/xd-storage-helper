@@ -14,15 +14,9 @@ class storageHelper {
     static async init() {
         let dataFolder = await fs.getDataFolder();
         try {
-            const file = await dataFolder.getEntry('storage.json');
-            if (file) {
-                return file;
-            }
-            else {
-                throw new Error('Storage file storage.json was not a file.');
-            }
+            return await dataFolder.getEntry('storage.json');
         } catch (e) {
-            const file = await dataFolder.createEntry('data.json', {type: storage.types.file, overwrite: true});
+            const file = await dataFolder.createEntry('storage.json', {type: storage.types.file, overwrite: true});
             if (file.isFile) {
                 await file.write('{}', {append: false});
                 return file;
