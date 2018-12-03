@@ -101,6 +101,23 @@ describe('storage helper', () => {
         });
     });
 
+    describe('storageHelper.delete()', () => {
+        it('should delete a previously stored value', async done => {
+            expect(Object.keys(JSON.parse(mockFileContents)).length).toBe(1);
+            const storageHelper = require('../storage-helper');
+            await storageHelper.delete('a');
+            expect(Object.keys(JSON.parse(mockFileContents)).length).toBe(0);
+            done();
+        });
+
+        it('should ignore a key that wasn\'t previously stored', async done => {
+            expect(Object.keys(JSON.parse(mockFileContents)).length).toBe(1);
+            const storageHelper = require('../storage-helper');
+            await storageHelper.delete('d');
+            expect(Object.keys(JSON.parse(mockFileContents)).length).toBe(1);
+            done();
+        });
+    });
 
     describe('storageHelper in special situations', () => {
         it('should correctly handle calling reset()', async (done) => {
