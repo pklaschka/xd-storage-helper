@@ -84,8 +84,8 @@ describe('storage helper', () => {
     it('should behave correctly even if no file exists', async done => {
         const storageHelper = require('../storage-helper');
         mockFileExists = false;
-        expect(await storageHelper.get('unknown', 3)).toBe(3);
-        expect(await storageHelper.get('unknown', 5)).toBe(3);
+        expect(mockFileExists).toBe(false);
+        await storageHelper.init();
         expect(mockFileExists).toBe(true);
         done();
     });
