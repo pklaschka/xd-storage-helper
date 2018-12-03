@@ -15,10 +15,12 @@ class storageHelper {
         let dataFolder = await fs.getDataFolder();
         try {
             const file = await dataFolder.getEntry('storage.json');
-            if (file)
+            if (file) {
                 return file;
-            else
-                throw 'File not found, creating the file...'
+            }
+            else {
+                throw new Error('Storage file storage.json was not a file.');
+            }
         } catch (e) {
             const file = await dataFolder.createEntry('data.json', {type: storage.types.file, overwrite: true});
             if (file.isFile) {
