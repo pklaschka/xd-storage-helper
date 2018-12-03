@@ -1,0 +1,7 @@
+.idea
+.github
+coverage
+node_modules
+test
+.travis.yml
+PULL_REQUEST_TEMPLATE.md
