@@ -14,14 +14,7 @@ class storageHelper {
     static async init() {
         let dataFolder = await fs.getDataFolder();
         try {
-            const file = await dataFolder.getEntry('storage.json');
-            if (file) {
-                return file;
-            }
-            else {
-                throw new Error('Storage file storage.json was not a file.');
-            }
-
+            return await dataFolder.getEntry('storage.json');
         } catch (e) {
             const file = await dataFolder.createEntry('data.json', {type: storage.types.file, overwrite: true});
             if (file.isFile) {
@@ -61,6 +54,15 @@ class storageHelper {
         let object = JSON.parse((await dataFile.read({format: storage.formats.utf8})).toString());
         object[key] = value;
         return await dataFile.write(JSON.stringify(object), {append: false, format: storage.formats.utf8})
+    }
+
+    /**
+     * Deletes a certain key-value-pair from the storage
+     * @param {string} key The key of the deleted pair
+     * @return {Promise<void>}
+     */
+    static async delete(key) {
+        return await this.set(key, undefined);
     }
 
     /**
