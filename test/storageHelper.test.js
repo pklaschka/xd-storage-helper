@@ -11,8 +11,8 @@ jest.mock('uxp', () => {
                 getDataFolder: () => {
                     mockFileExists = true;
                     return {
-                        createEntry: (name, options) => {
-                            return {
+                        createEntry: async (name, options) => {
+                            return await {
                                 read: () => {
                                     return mockFileContents
                                 },
@@ -22,8 +22,8 @@ jest.mock('uxp', () => {
                                 isFile: () => true
                             }
                         },
-                        getEntry: (name) => {
-                            return mockFileExists ? {
+                        getEntry: async (name) => {
+                            return await mockFileExists ? {
                                 read: () => {
                                     return mockFileContents
                                 },
@@ -46,47 +46,76 @@ describe('storage helper', () => {
         mockFileExists = true;
     });
 
-    it('should load without any errors', () => {
-        const storageHelper = require('../storage-helper');
+    describe('storageHelper', () => {
+        it('should load without any errors', () => {
+            const storageHelper = require('../storage-helper');
+            expect(storageHelper).toBeDefined()
+        });
+
+        it('should call init() without any errors', async done => {
+            const storageHelper = require('../storage-helper');
+            expect(await storageHelper.init()).toBeDefined();
+            done();
+        });
     });
 
-    it('should call init() without any errors', () => {
-        const storageHelper = require('../storage-helper');
-        expect(storageHelper.init()).toBeDefined();
+    describe('storageHelper.get()', ()=>{
+        it('should call get() without any errors', async (done) => {
+            const storageHelper = require('../storage-helper');
+            expect(await storageHelper.get('a', 3)).toBe(5);
+            done();
+        });
+
+        it('should return the default value if no other is it wasn\'t defined before', async done => {
+            const storageHelper = require('../storage-helper');
+            expect(await storageHelper.get('unknown', 3)).toBe(3);
+            done();
+        });
+
+        it('should save the default value if no other is it wasn\'t defined before', async done => {
+            const storageHelper = require('../storage-helper');
+            expect(await storageHelper.get('unknown', 3)).toBe(3);
+            expect(await storageHelper.get('unknown', 5)).toBe(3);
+            done();
+        });
     });
 
-    it('should call get() without any errors', async (done) => {
-        const storageHelper = require('../storage-helper');
-        expect(await storageHelper.get('a', 3)).toBe(5);
-        done();
+    describe('storageHelper.set()', () => {
+        it('should override the value if one was previously stored', async done => {
+            expect(Object.keys(JSON.parse(mockFileContents)).length).toBe(1);
+            const storageHelper = require('../storage-helper');
+            await storageHelper.set('a',-5);
+            expect(await storageHelper.get('a', undefined)).toBe(-5);
+            expect(Object.keys(JSON.parse(mockFileContents)).length).toBe(1);
+            done();
+        });
+
+        it('should create a new value if the key wasn\'t previously stored', async done => {
+            expect(Object.keys(JSON.parse(mockFileContents)).length).toBe(1);
+            const storageHelper = require('../storage-helper');
+            await storageHelper.set('b',-5);
+            expect(await storageHelper.get('b', undefined)).toBe(-5);
+            expect(Object.keys(JSON.parse(mockFileContents)).length).toBe(2);
+            done();
+        });
     });
 
-    it('should correctly handle calling reset()', async (done) => {
-        const storageHelper = require('../storage-helper');
-        await (storageHelper.reset());
-        expect(mockFileContents).toBe('{}');
-        done();
-    });
 
-    it('should return the default value if no other is it wasn\'t defined before', async done => {
-        const storageHelper = require('../storage-helper');
-        expect(await storageHelper.get('unknown', 3)).toBe(3);
-        done();
-    });
+    describe('storageHelper in special situations', () => {
+        it('should correctly handle calling reset()', async (done) => {
+            const storageHelper = require('../storage-helper');
+            await (storageHelper.reset());
+            expect(mockFileContents).toBe('{}');
+            done();
+        });
 
-    it('should save the default value if no other is it wasn\'t defined before', async done => {
-        const storageHelper = require('../storage-helper');
-        expect(await storageHelper.get('unknown', 3)).toBe(3);
-        expect(await storageHelper.get('unknown', 5)).toBe(3);
-        done();
-    });
-
-    it('should behave correctly even if no file exists', async done => {
-        const storageHelper = require('../storage-helper');
-        mockFileExists = false;
-        expect(mockFileExists).toBe(false);
-        await storageHelper.init();
-        expect(mockFileExists).toBe(true);
-        done();
+        it('should behave correctly even if no file exists', async done => {
+            const storageHelper = require('../storage-helper');
+            mockFileExists = false;
+            expect(mockFileExists).toBe(false);
+            expect(await storageHelper.get('unknown', 3)).toBe(3);
+            expect(mockFileExists).toBe(true);
+            done();
+        });
     });
 });
