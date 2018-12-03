@@ -11,7 +11,7 @@ jest.mock('uxp', () => {
                 getDataFolder: () => {
                     mockFileExists = true;
                     return {
-                        createEntry: async (name, options) => {
+                        createEntry: async () => {
                             return await {
                                 read: () => {
                                     return mockFileContents
@@ -22,7 +22,7 @@ jest.mock('uxp', () => {
                                 isFile: () => true
                             }
                         },
-                        getEntry: async (name) => {
+                        getEntry: async () => {
                             return await mockFileExists ? {
                                 read: () => {
                                     return mockFileContents
@@ -54,6 +54,7 @@ describe('storage helper', () => {
 
         it('should call init() without any errors', async done => {
             const storageHelper = require('../storage-helper');
+            // noinspection JSAccessibilityCheck
             expect(await storageHelper.init()).toBeDefined();
             done();
         });
