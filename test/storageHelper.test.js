@@ -1,4 +1,5 @@
 let mockFileContents = '{"a":5}';
+let mockFileExists = true;
 
 jest.mock('uxp', () => {
     return {
@@ -8,16 +9,29 @@ jest.mock('uxp', () => {
             },
             localFileSystem: {
                 getDataFolder: () => {
+                    mockFileExists = true;
                     return {
-                        getEntry: (name) => {
+                        createEntry: (name, options) => {
                             return {
                                 read: () => {
                                     return mockFileContents
                                 },
                                 write: (contents) => {
                                     mockFileContents = contents;
-                                }
+                                },
+                                isFile: () => true
                             }
+                        },
+                        getEntry: (name) => {
+                            return mockFileExists ? {
+                                read: () => {
+                                    return mockFileContents
+                                },
+                                write: (contents) => {
+                                    mockFileContents = contents;
+                                },
+                                isFile: () => true
+                            } : null;
                         }
                     };
                 }
@@ -29,6 +43,7 @@ jest.mock('uxp', () => {
 describe('storage helper', () => {
     beforeEach(() => {
         mockFileContents = '{"a":5}';
+        mockFileExists = true;
     });
 
     it('should load without any errors', () => {
@@ -63,6 +78,15 @@ describe('storage helper', () => {
         const storageHelper = require('../storage-helper');
         expect(await storageHelper.get('unknown', 3)).toBe(3);
         expect(await storageHelper.get('unknown', 5)).toBe(3);
+        done();
+    });
+
+    it('should behave correctly even if no file exists', async done => {
+        const storageHelper = require('../storage-helper');
+        mockFileExists = false;
+        expect(await storageHelper.get('unknown', 3)).toBe(3);
+        expect(await storageHelper.get('unknown', 5)).toBe(3);
+        expect(mockFileExists).toBe(true);
         done();
     });
 });
