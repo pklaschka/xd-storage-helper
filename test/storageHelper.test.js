@@ -83,13 +83,10 @@ describe('storage helper', () => {
 
     describe('storageHelper.set()', () => {
         it('should override the value if one was previously stored', async done => {
-            console.log('before', mockFileContents);
             expect(Object.keys(JSON.parse(mockFileContents)).length).toBe(1);
             const storageHelper = require('../storage-helper');
             await storageHelper.set('a',-5);
-            console.log('afterSet', mockFileContents);
             expect(await storageHelper.get('a', undefined)).toBe(-5);
-            console.log('beforeLength', mockFileContents);
             expect(Object.keys(JSON.parse(mockFileContents)).length).toBe(1);
             done();
         });
