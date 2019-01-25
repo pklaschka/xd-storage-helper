@@ -131,7 +131,8 @@ describe('storage helper', () => {
             const storageHelper = require('../storage-helper');
             mockFileExists = false;
             expect(mockFileExists).toBe(false);
-            expect(await storageHelper.get('unknown', 3)).toBe(3);
+            expect(await storageHelper.get('unknown', 111)).toBe(111);
+            expect(await storageHelper.get('unknown', 5)).toBe(111);
             expect(mockFileExists).toBe(true);
             done();
         });
