@@ -1,9 +1,11 @@
 /*
- * Copyright (c) 2018. by Pablo Klaschka
+ * Copyright (c) 2019. by Pablo Klaschka
  */
 
 const storage = require('uxp').storage;
 const fs = storage.localFileSystem;
+
+let data;
 
 class storageHelper {
     /**
@@ -19,6 +21,7 @@ class storageHelper {
             const file = await dataFolder.createEntry('storage.json', {type: storage.types.file, overwrite: true});
             if (file.isFile) {
                 await file.write('{}', {append: false});
+                data = {};
                 return file;
             } else {
                 throw new Error('Storage file storage.json was not a file.');
@@ -33,13 +36,15 @@ class storageHelper {
      * @return {Promise<*>} The value retrieved from storage. If none is saved, the `defaultValue` is returned.
      */
     static async get(key, defaultValue) {
-        const dataFile = await this.init();
-        let object = JSON.parse((await dataFile.read({format: storage.formats.utf8})).toString());
-        if (object[key] === undefined) {
+        if (!data) {
+            const dataFile = await this.init();
+            data = JSON.parse((await dataFile.read({format: storage.formats.utf8})).toString());
+        }
+        if (data[key] === undefined) {
             await this.set(key, defaultValue);
             return defaultValue;
         } else {
-            return object[key];
+            return data[key];
         }
     }
 
@@ -51,9 +56,8 @@ class storageHelper {
      */
     static async set(key, value) {
         const dataFile = await this.init();
-        let object = JSON.parse((await dataFile.read({format: storage.formats.utf8})).toString());
-        object[key] = value;
-        return await dataFile.write(JSON.stringify(object), {append: false, format: storage.formats.utf8})
+        data[key] = value;
+        return await dataFile.write(JSON.stringify(data), {append: false, format: storage.formats.utf8})
     }
 
     /**
@@ -71,8 +75,8 @@ class storageHelper {
      */
     static async reset() {
         const dataFile = await this.init();
-        return await dataFile.write('{}', {append: false, format: storage.formats.utf8})
-
+        data = {};
+        return await dataFile.write('{}', {append: false, format: storage.formats.utf8});
     }
 }
 
