@@ -21,7 +21,7 @@ declare module 'xd-storage-helper' {
          * @param {*} defaultValue The default value. Gets saved and returned if no value was previously set for the speciefied key.
          * @return {Promise<*>} The value retrieved from storage. If none is saved, the `defaultValue` is returned.
          */
-        static get(key:string, defaultValue:any): Promise<any>;
+        public static get(key:string, defaultValue:any): Promise<any>;
 
         /**
          * Saves a certain key-value-pair to the storage.
@@ -29,19 +29,19 @@ declare module 'xd-storage-helper' {
          * @param {*} value The value that get's saved
          * @return {Promise<void>}
          */
-        static set(key: string, value:any): Promise<void>;
+        public static set(key: string, value:any): Promise<void>;
 
         /**
          * Deletes a certain key-value-pair from the storage
          * @param {string} key The key of the deleted pair
          * @return {Promise<void>}
          */
-        static delete(key: string): Promise<void>;
+        public static delete(key: string): Promise<void>;
 
         /**
          * Resets (i.e. purges) all stored settings.
          * @returns {Promise<void>}
          */
-        static reset(): Promise<void>;
+        public static reset(): Promise<void>;
     }
 }

@@ -16,7 +16,9 @@ class storageHelper {
     static async init() {
         let dataFolder = await fs.getDataFolder();
         try {
-            return await dataFolder.getEntry('storage.json');
+            let returnFile = await dataFolder.getEntry('storage.json');
+            data = JSON.parse((await returnFile.read({format: storage.formats.utf8})).toString());
+            return returnFile;
         } catch (e) {
             const file = await dataFolder.createEntry('storage.json', {type: storage.types.file, overwrite: true});
             if (file.isFile) {
@@ -75,8 +77,8 @@ class storageHelper {
      */
     static async reset() {
         const dataFile = await this.init();
-        data = {};
-        return await dataFile.write('{}', {append: false, format: storage.formats.utf8});
+        return await dataFile.write('{}', {append: false, format: storage.formats.utf8})
+
     }
 }
 
