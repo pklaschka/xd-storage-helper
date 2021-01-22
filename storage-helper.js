@@ -7,6 +7,15 @@ const fs = storage.localFileSystem;
 
 let data;
 
+/**
+ * Reads the current value from the storage file
+ * @param dataFile - the reference to the storage file
+ * @return {Promise<any>} resolves with the data for the file on success, rejects otherwise
+ */
+async function readStorageFile(dataFile) {
+    return JSON.parse((await dataFile.read({format: storage.formats.utf8})).toString());
+}
+
 class storageHelper {
     /**
      * Creates a data file if none was previously existent.
@@ -17,7 +26,7 @@ class storageHelper {
         let dataFolder = await fs.getDataFolder();
         try {
             let returnFile = await dataFolder.getEntry('storage.json');
-            data = JSON.parse((await returnFile.read({format: storage.formats.utf8})).toString());
+            data = await readStorageFile(returnFile);
             return returnFile;
         } catch (e) {
             const file = await dataFolder.createEntry('storage.json', {type: storage.types.file, overwrite: true});
@@ -40,7 +49,7 @@ class storageHelper {
     static async get(key, defaultValue) {
         if (!data) {
             const dataFile = await this.init();
-            data = JSON.parse((await dataFile.read({format: storage.formats.utf8})).toString());
+            await readStorageFile(dataFile);
         }
         if (data[key] === undefined) {
             await this.set(key, defaultValue);
