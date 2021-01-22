@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.com/pklaschka/xd-storage-helper.svg?branch=master)](https://travis-ci.com/pklaschka/xd-storage-helper)
 [![npm version](https://badge.fury.io/js/xd-storage-helper.svg)](https://badge.fury.io/js/xd-storage-helper)
 ![David](https://img.shields.io/david/pklaschka/xd-storage-helper.svg)
+[![Maintainability](https://api.codeclimate.com/v1/badges/51782a0bf71f3c02260a/maintainability)](https://codeclimate.com/github/pklaschka/xd-storage-helper/maintainability)
 
 
 [![NPM](https://nodei.co/npm/xd-storage-helper.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/xd-storage-helper/)
@@ -59,12 +60,12 @@ One common example would be to fill form fields in a dialog with previously used
 ```javascript
 const storageHelper = require('./lib/storage-helper') // or const storageHelper = require('xd-storage-helper') if you chose option 1
 
-[...] // Create the dialog, so that you have a reference to your text input with the name myInput
+// [...] Create the dialog, so that you have a reference to your text input with the name myInput
 
 const lastInput = await storageHelper.get('myLastInput', 'my default value'); // Retrieves last input or default 'my default value', if nothing is saved
 myInput.value = lastInput; // and sets it as the input's default value
 
-[...]
+// [...]
 
 function onsubmit() {
   storageHelper.set('myLastInput', myInput.value).then(() => { // Save value when form gets submitted
@@ -75,7 +76,7 @@ form.onsubmit = onsubmit;
 
 const result = await dialog.showModal();
 
-[...] // Do stuff with the results
+// [...] Do stuff with the results
 ```
 
 ## Functions reference
