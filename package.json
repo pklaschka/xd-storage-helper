@@ -37,6 +37,6 @@
   },
   "homepage": "https://github.com/pklaschka/xd-storage-helper#readme",
   "devDependencies": {
-    "jest": "^27.0.1"
+    "jest": "^28.0.0"
   }
 }
